@@ -1,29 +1,26 @@
 language: rust
 rust:
-- stable
-- beta
-- nightly
-
-matrix:
-  allow_failures:
-  - rust:
-    - beta
-    - nightly
-
+  - stable
+  - beta
+  - nightly
 env:
   global:
     secure: 0uaWcn+Wi2RuUxheB60ScOwpaMtdTVAB24h2Mokyxlwm2K/NONLE/rI+IC6ucO1uT0jbVtOpsByFfmVP5M1Tqy8JWuh3t/bHHyK4p29i5nCsZFD/Xya6XfZ9sSs47rIHgvFykRpmiMOnUvRUUCb90FRDOXR4iye3uPYv7QB2065gS7OFdze+42rhKGB9tMo64WaF2vV+j3hg/U700e/kwEQaznRZE3HHXL4yr2bcykBLXcO/jAJ2cs8M5x/TWL99jZp84SVZIEjKbJu7eD9Ju+DXgWg9gKJOPkrcO3PSEMRBSiRF6UUHuN63sb5ehTAutOvNd1OGtk/ikZENOVNZtlpcYPpCQT4cnj3O0wbmhq6fJ59eHt1b8yRIumMTF4YRi42ZNtGXxjHp9YqCyVjRUb1jT1ay0Py9FXGqR+OO8j1EsyDqMDK7yp+GiEzexhpmPH4C8VjkLwghLePugIU/+fv5MPCRDC/oGAge3KIPGAbhJt5OVCs8H2spYP1oNqWAbUwvqssP3gnmg7c0YCJh98LJJb3WAd131BJbKoxHsYZ9iYlPwlGgOdK3XUS21vLdZvddB5AKdj615foTeCP9V5Oi6jTbI1CtVcQiTJiuTNOjSvDyxpBWW6iGJxiNDm7y/z/YqEzaN1uyr69D5rh9PjBLNXr1SBvfCtSwL96BkFs=
 
 after_success:
-- if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then
-  git config credential.helper "store --file=.git/credentials";
-  echo "https://$GH_TOKEN:@github.com" > .git/credentials;
-  git clone https://github.com/skorezore/rusterizer;
-  cd rusterizer;
-  cargo doc --no-deps;
-  mkdir doc;
-  cp -r target/doc doc;
-  git add -A;
-  git commit -m"Update documentation for $TRAVIS_COMMIT.";
-  git push;
-  fi
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then
+      echo "Update docs for commits $TRAVIS_COMMIT_RANGE" > $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
+      echo >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
+      git log $TRAVIS_COMMIT_RANGE --pretty=oneline >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
+      git clone -b doc "$GH_TOKEN:github.com/$TRAVIS_REPO_SLUG.git" $TRAVIS_BUILD_DIR-doc;
+      ln -s $TRAVIS_BUILD_DIR-doc target/doc;
+      cargo doc;
+      pushd $TRAVIS_BUILD_DIR-doc;
+      git config credential.helper "store --file=.git/credentials";
+      git config --global user.email "skorezore@gmail.com";
+      git config --global user.name "Nabijaczleweli Autouploader Bot";
+      git config --global push.default simple;
+      git add * && git commit -F $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
+      git push;
+      popd;
+    fi
