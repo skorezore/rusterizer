@@ -16,8 +16,8 @@ env:
 
 after_success:
 - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then
-  git config credential.helper "store --file=.git/credentials"
-  echo "https://$GH_TOKEN:@github.com" > .git/credentials
+  git config credential.helper "store --file=.git/credentials";
+  echo "https://$GH_TOKEN:@github.com" > .git/credentials;
   git clone https://github.com/skorezore/rusterizer;
   cd rusterizer;
   cargo doc --no-deps;
