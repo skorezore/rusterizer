@@ -1,10 +1,10 @@
 [package]
 name = "rusterizer"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Julian Torreno <skorezore@gmail.com>"]
 
 description = "A 3D rendering engine written in Rust."
-keywords = ["rusterizer", "3D", "rendering", "engine", "gamedev"]
+keywords = ["3D", "rendering", "engine", "gamedev"]
 documentation = "http://skorezore.xyz/rusterizer/documentation"
 homepage = "http://skorezore.xyz/rusterizer"
 repository = "https://github.com/skorezore/rusterizer"
