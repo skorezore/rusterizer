@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Julian Torreno <skorezore@gmail.com>"]
 
 description = "A 3D rendering engine written in Rust."
-keywords = ["rusterizer", "rendering engine", "3D"]
+keywords = ["rusterizer", "rendering", "engine", "3D"]
 documentation = "http://skorezore.xyz/rusterizer/documentation"
 homepage = "http://skorezore.xyz/rusterizer"
 repository = "https://github.com/skorezore/rusterizer"
