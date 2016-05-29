@@ -1,11 +1,26 @@
 language: rust
 rust:
-  - stable
-  - beta
-  - nightly
+- stable
+- beta
+- nightly
 
 matrix:
   allow_failures:
-    - rust:
-        - beta
-        - nightly
+  - rust:
+    - beta
+    - nightly
+env:
+  global:
+    secure: I5VT7OjutaDz5TvEcx+Yl0hYG1TDC1CGf01hSez1A4xYpdWUMCuAnef2kJMSL64M+7sFZWE+ewViX6brg8HDEQsjt/wRqqqDgmBj/Naj5zULMs1HbX2jPO6IEF8f1FbP5Rbj5NvL70uBnj+QqP2qy/RuE8OlUKmMsGO+GAiG0A/xdJgGTLXklKnwnSfxGlgDKWdh+WalaLQqJIoITRk7hLr2OEqdOSs6aMkmJbqTcC6CXK+CQotL+NS6KakhBYLsmjtndncSXexJWutkGM0MdJikQYJMJdFPE+bYC4DqPPa1oRUQcDz1ZDUMMTa8ETygc8vbPFaQl/6VIJeLe5mgqbJZyLfVkb7T5SgYI3WXi0OJmvNJFUoVcj6vHdOpiAENz9NRjmNf5KfxjPGZgNpUP3SDCevsnsN1M/yIIKEfo0mQDTop2q53a9Z6mojWf9AQB/QNasy2ql0LyZWxlu09WXHEB1+E/89HsuaTHqPA/Xq+cPTH60jFx49eYHbuOlMTPBhGOy33m9vzGEf5GvZ/lRFf6sTJG8ByKxop41vo5EqPFWT2oMhQrbw5ftPIjb9uJejrLa+sR+hmiWhK1SHpt4Wuld5lGNem9yDyUNMcf8IDHY9jFaIaL8rpBOGIaC7sclfvuVvGRcPZ8pPfn2hbhoMNsRe4tqLv+K/xSD4A4B4=
+
+after_success:
+  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then
+    git clone https://skorezore:password@github.com/skorezore/rusterizer;
+    cd rusterizer;
+    cargo doc --no-deps;
+    mkdir doc;
+    cp -r target/doc doc;
+    git add -A;
+    git commit -m"Update documentation for $TRAVIS_COMMIT.";
+    git push;
+    fi
