@@ -7,7 +7,7 @@ description = "A 3D renderer written in Rust."
 keywords = ["3D", "renderer", "gamedev"]
 documentation = "skorezore.xyz/rusterizer/documentation/rusterizer/index.html"
 homepage = "http://skorezore.xyz/rusterizer"
-repository = "https://github.com/skorezore/rusterizer"
+repository = "http://skorezore.xyz/rusterizer/documentation/rusterizer/index.html"
 readme = "README.md"
 license = "MIT"
 
