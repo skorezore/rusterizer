@@ -1,26 +1,35 @@
 language: rust
 rust:
-  - stable
-  - beta
-  - nightly
+- stable
+- beta
+- nightly
+
+matrix:
+  allow_failures:
+  - rust:
+    - beta
+    - nightly
+
 env:
   global:
-    secure: 0uaWcn+Wi2RuUxheB60ScOwpaMtdTVAB24h2Mokyxlwm2K/NONLE/rI+IC6ucO1uT0jbVtOpsByFfmVP5M1Tqy8JWuh3t/bHHyK4p29i5nCsZFD/Xya6XfZ9sSs47rIHgvFykRpmiMOnUvRUUCb90FRDOXR4iye3uPYv7QB2065gS7OFdze+42rhKGB9tMo64WaF2vV+j3hg/U700e/kwEQaznRZE3HHXL4yr2bcykBLXcO/jAJ2cs8M5x/TWL99jZp84SVZIEjKbJu7eD9Ju+DXgWg9gKJOPkrcO3PSEMRBSiRF6UUHuN63sb5ehTAutOvNd1OGtk/ikZENOVNZtlpcYPpCQT4cnj3O0wbmhq6fJ59eHt1b8yRIumMTF4YRi42ZNtGXxjHp9YqCyVjRUb1jT1ay0Py9FXGqR+OO8j1EsyDqMDK7yp+GiEzexhpmPH4C8VjkLwghLePugIU/+fv5MPCRDC/oGAge3KIPGAbhJt5OVCs8H2spYP1oNqWAbUwvqssP3gnmg7c0YCJh98LJJb3WAd131BJbKoxHsYZ9iYlPwlGgOdK3XUS21vLdZvddB5AKdj615foTeCP9V5Oi6jTbI1CtVcQiTJiuTNOjSvDyxpBWW6iGJxiNDm7y/z/YqEzaN1uyr69D5rh9PjBLNXr1SBvfCtSwL96BkFs=
+    secure: S9MdFWIfOYQQ3AaZkPPrAkgDf7rUvp7cCnEJhA+m6nZJjMe0wP7mvC4l63amU9usMZ1iGiJK59y/IQU4rpW7Ho6Y5BDbrgCaS3wOesMtygeThi/DHUb1bPyQtt/3GnhAC46LralmNvH7oeOeAGtOT6+DJjH9r56FyztzaltCxNNxhUBnNd4XylW8Uw1jVahACIcJ3PJbFhhBhcrNTFadTGsA4U5W3B8Og2VY1eZTPoWCSpzfi6hXmV3Cllr5NqBwmHVHuV7NORtvQMrREyoHE3giHlxsiem5LCDtWZILN0CUmCZYuCN3+OlpAdhWIKVly1tPadLlZNiuZrY0ETKFASfjI8bjHOUR+MhQjVj6ao8mKQIlHczuA1F8Pv3GVz25y2g3iKx1plX3ZqmfKfMJ+6HENf0zFuYe9tbyZoK3fY/J+zwhvTX0CURkkw7kTYVK755aNuQ6mnG9h8C8xGGX7ob2K+a1inRAazTMFgZODJor+O3f8SmSpcEXkcaYwviEqlRfWVFd8HorQb2SZsQI1IPV9oSEX3TDzG0RGsCCtGwxkkk5mibPn3j87cBzlQKIrkQ3KKFApj9rhesJmUnhsKNaqXth7pySMt8DhMySV7rQkb+gM4E5peHhZ09sZOl3KwPtjyMlzqJn/oF1nOdIRKYMk1e54jcw9f2tHoKBEMc=
 
 after_success:
-  - if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then
-      echo "Update docs for commits $TRAVIS_COMMIT_RANGE" > $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
-      echo >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
-      git log $TRAVIS_COMMIT_RANGE --pretty=oneline >> $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
-      git clone -b doc "$GH_TOKEN:github.com/$TRAVIS_REPO_SLUG.git" $TRAVIS_BUILD_DIR-doc;
-      ln -s $TRAVIS_BUILD_DIR-doc target/doc;
-      cargo doc;
-      pushd $TRAVIS_BUILD_DIR-doc;
-      git config credential.helper "store --file=.git/credentials";
-      git config --global user.email "skorezore@gmail.com";
-      git config --global user.name "Nabijaczleweli Autouploader Bot";
-      git config --global push.default simple;
-      git add * && git commit -F $TRAVIS_BUILD_DIR/../DOC_UPDATE_MSG;
-      git push;
-      popd;
-    fi
+- if [ -n "$TRAVIS_PULL_REQUEST" ] && [ "$TRAVIS_RUST_VERSION" == "stable" ]; then
+
+  git config --global user.email "skorezore@gmail.com";
+  git config --global user.name "not-skorezore";
+  git clone https://${GH_TOKEN}@github.com/skorezore/rusterizer;
+
+  cd rusterizer;
+  cargo doc;
+
+  rm -rf doc;
+  mkdir doc;
+  cp -r target/doc/rusterizer ../doc;
+
+  git add -A;
+  git commit -m"Updating documentation for ${TRAVIS_COMMIT}.";
+  git push;
+
+  fi
