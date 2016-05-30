@@ -26,10 +26,10 @@ after_success:
 
   rm -rf doc;
   mkdir doc;
-  cp -r target/doc/rusterizer ../doc;
+  cp -r target/doc/rusterizer doc;
 
   git add -A;
   git commit -m"Updating documentation for ${TRAVIS_COMMIT}.";
-  git push;
+  git push --force --quiet;
 
   fi
