@@ -1,10 +1,10 @@
 [package]
 name = "rusterizer"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Julian Torreno <skorezore@gmail.com>"]
 
-description = "A 3D renderer written in Rust."
-keywords = ["3D", "renderer", "gamedev"]
+description = "A 3D graphics library written in Rust."
+keywords = ["3D", "graphics", "gamedev"]
 documentation = "http://skorezore.xyz/rusterizer/documentation/rusterizer/index.html"
 homepage = "http://skorezore.xyz/rusterizer"
 repository = "https://github.com/skorezore/rusterizer"
@@ -14,3 +14,4 @@ license = "MIT"
 [dependencies]
 glium = "0.14.0"
 tobj = "0.1.1"
+image = "0.10.0"
