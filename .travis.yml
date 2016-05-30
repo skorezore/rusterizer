@@ -29,7 +29,7 @@ after_success:
   cd ../skorezore.github.io
 
   rm -rf rusterizer/documentation;
-  mkdir rusterizer/documentation;
+  mkdir -p rusterizer/documentation;
   cp -a ../rusterizer/target/doc/. rusterizer/documentation;
 
   git add -A;
