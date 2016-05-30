@@ -4,5 +4,5 @@ A 3D renderer written in Rust.
 
 # Documentation
 
-The documentation can be found [here](http://skorezore.xyz/rusterizer/documentation) and can also
+The documentation can be found [here](http://skorezore.xyz/rusterizer/documentation/rusterizer/index.html) and can also
 be generated through `cargo doc`.
