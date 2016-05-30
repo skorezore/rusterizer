@@ -4,7 +4,7 @@ A 3D graphics library written in Rust.
 
 ```toml
 [dependencies]
-rusterizer = "0.1.5"
+rusterizer = "0.1.6"
 ```
 
 # Documentation
