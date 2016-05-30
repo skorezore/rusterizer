@@ -19,17 +19,21 @@ after_success:
 
   git config --global user.email "skorezore@gmail.com";
   git config --global user.name "not-skorezore";
+
+  git clone https://${GH_TOKEN}@github.com/skorezore/skorezore.github.io;
   git clone https://${GH_TOKEN}@github.com/skorezore/rusterizer;
 
   cd rusterizer;
   cargo doc --no-deps;
 
-  rm -rf doc;
-  mkdir doc;
-  cp -a target/doc/. doc;
+  cd ../skorezore.github.io
+
+  rm -rf rusterizer/documentation;
+  mkdir rusterizer/documentation;
+  cp -a ../rusterizer/target/doc/. rusterizer/documentation;
 
   git add -A;
-  git commit -m"Updating documentation for ${TRAVIS_COMMIT}.";
+  git commit -m"Updating rusterizer documentation for ${TRAVIS_COMMIT}.";
   git push --force --quiet;
 
   fi

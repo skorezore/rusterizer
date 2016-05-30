@@ -1,6 +1,6 @@
 [package]
 name = "rusterizer"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Julian Torreno <skorezore@gmail.com>"]
 
 description = "A 3D renderer written in Rust."
