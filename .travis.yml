@@ -22,7 +22,7 @@ after_success:
   git clone https://${GH_TOKEN}@github.com/skorezore/rusterizer;
 
   cd rusterizer;
-  cargo doc;
+  cargo doc --no-deps;
 
   rm -rf doc;
   mkdir doc;
